@@ -1,0 +1,29 @@
+(( APA ITU JAVASCRIPT ))
+
+Javascript adalah bahasa pemrograman multi-paradigma berorientasi objek tingkat tinggi. Apa artinya?
+
+> Bahasa pemrograman pada dasarnya hanyalah alat yang memungkinkan kita untuk menulis kode yang memerintahkan komputer untuk melakukan sesuatu
+> Bahasa tingkat tinggi artinya kita tidak perlu memikirkan banyak hal rumit seperti mengelola komputer saat komputer berjalan atau memprogram
+> Berorientasi objek artinya sebagian besar didasarkan pada konsep objek untuk menyimpan sebagian besar jenis data
+> Multi-paradigma artinya sangat fleksibel dan serbaguna
+
+(( PERAN JAVASCRIPT DALAM WEB-DEVELOPMENT ))
+
+Dalam pengembangan web ada 3 teknologi HTML, CSS, Javascript
+
+> HTML => Content
+> CSS => Persentation
+> Javascript => Real programing Language (Interactive)
+
+Analoginya
+- HTML(Noun = "kata benda")
+- CSS(Adjective = "kata sifat")
+- Javascript(Verb= "kata kerja")
+
+(( Javscript Version ))
+
+[ES = ECMAScript, 5 = Version]
+
+ES5 -> ES6(2015) -> ES7(2016) -> ES8(2017) -> ES9(2018) -> ... -> ES15(2024)
+
+ES6 atau di atasnya disebut "Modern Javascript"
