@@ -1,27 +1,41 @@
-// Value & Variables
+// Data Types
 
+// Object dan Primitives
+
+// Dalam Javascript setiap value adalah objek atau primitive
+
+// contoh: Objek
+let me = {
+    name: "Syahrin",
+};
+// contoh: Primitive
 let firstName = "Syahrin";
-console.log(firstName);
+let age = 30;
 
-// let 4year = 4 => ini cara deklarasi yang salah
+// Jadi suatu nilai akan menjadi 'primitive' jika bukan 'objek'
 
-// Nama Variable harus dimulai dengan huruf, garis bawah (_), atau tanda dollar ($)
-// Contoh yg benar:
-let year4 = 4;
-let _year4 = 4;
-let $year4 = 4;
+// ini adalah data type paling penting
+let numberType = 20
+let stringType = "String Data Type"
+let booleanType= true
+// data type tambahan
+let undefinedType // data yang belum ada value 
+null // data kosong
+let symbolType = Symbol(); // Symbol (ES2015)
+let bigIntType = 1234567890123456789012345678901234567890n;
 
-// Nama variabel peka terhadap huruf besar dan kecil
-let myVariable = 10;
-let myvariable = 20;
+console.log(numberType);
+/* multi-line comment */
 
-// Nama variabel tidak boleh menggunakan kata kunci yang sudah ada dalam JavaScript seperti let, class, return, function, dll.
-// let let = 5; // Salah
-// let function = 10; // Salah
+// testing datatype
+let javascriptIsFun = true
+console.log(javascriptIsFun); true
+// typeof = operator untuk mengetahui value datatype di javascript
+console.log(typeof javascriptIsFun); // boolean
 
-// Namakan variable sesuai nilai yang tercantum
-let myFirstJob = "Barista";
-let currentJob = "Student"
-// nama variable diatas lebih mudah dibaca
-let job1 = "Barista";
-let job2 = "Student"
+// Dynamic Typeing = dapat dengan mudah mengubah value yang dipegang oleh variable
+
+let dynamicTypeing = true
+dynamicTypeing = "YES!"
+
+console.log(dynamicTypeing); // value: YES! bukan true
