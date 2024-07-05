@@ -46,12 +46,15 @@ const john = {
     },
 };
 
-if (mark.calcBMI() < john.calcBMI()) {
+mark.calcBMI();
+john.calcBMI();
+
+if (mark.bmi < john.bmi) {
     console.log(
-        `"John Smith's BMI (${john.bmi}) is higher than Mark Miller's (${mark.bmi})!".`
+        `${john.fullName}'s BMI (${john.bmi}) is higher than ${mark.fullName}'s (${mark.bmi})!.`
     );
 } else {
     console.log(
-        `"Mark Miller's BMI (${mark.bmi}) is higher than John Smith's (${john.bmi})!".`
+        `${mark.fullName}'s BMI (${mark.bmi}) is higher than ${john.fullName}'s (${john.bmi})!.`
     );
 }
