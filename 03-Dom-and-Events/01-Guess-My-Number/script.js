@@ -1,3 +1,4 @@
-'use strict';
+"use strict";
 
-document.querySelector(`.message`)
+// document.querySelector(`.message`);
+const jeje = 23;
