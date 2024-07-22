@@ -237,6 +237,29 @@ const books = [
   },
 ];
 
+//! Destrukturkan susunan buku menjadi dua variabel yang disebut Buku pertama dan Buku kedua.
+const [firstBook, secondBook] = books;
+console.log(firstBook, secondBook);
+
+//! Destrukturkan array buku menjadi variabel yang disebut Buku Ketiga. Anda harus melewatkan dua buku pertama.
+const [, , thridBook] = books;
+console.log(thridBook);
+
+//! Di bawah ini adalah array peringkat bersarang yang berisi dua array lainnya. Destrukturkan susunan peringkat yang disarangkan menjadi dua variabel yang disebut rating danratingCount. Dalam hasil destrukturisasi Anda, variabel peringkat harus menyimpan angka 4,19, dan variabelratingCount harus menyimpan angka 144584.
+const ratings = [
+  ["rating", 4.19],
+  ["ratingsCount", 144584],
+];
+const [[nameRating], [nameRatingsCount]] = ratings; // mengambil nilai ke-1 dari array
+const [[, rating], [, ratingsCount]] = ratings; // mengambil nilai ke-2 dari array
+console.log(nameRating, nameRatingsCount);
+console.log(rating, ratingsCount);
+
+//!Di bawah ini adalah array ratingStars. Ubah strukturnya menjadi tiga variabel yang disebut fiveStarRatings, oneStarRatings, dan threeStarRatings. Tetapkan variabel threeStarRatings dengan nilai default 0.
+const ratingStars = [63405, 1808];
+const [fiveStarRatings, oneStarRatings, threeStarRatings = 0] = ratingStars;
+console.log(fiveStarRatings, oneStarRatings, threeStarRatings);
+
 //!! mencari semua title buku
 const allTitles = []; // container untuk menampung data
 for (let i = 0; i < books.length; i++) {
@@ -250,5 +273,4 @@ for (let j = 0; j < books.length; j++) {
   const rateBooks = books[j].thirdParty.goodreads.rating;
   if (rateBooks >= 4.2) greatbooks.push(`This books: ${rateBooks}`);
 }
-
 console.log(greatbooks);
