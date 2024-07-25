@@ -248,23 +248,8 @@ const books = [
   },
 ];
 
-//! Destrukturkan properti kata kunci (array) buku pertama dari array buku menjadi variabel yang disebut mainKeyword dan sisanya. Kata kunci pertama harus ditetapkan ke mainKeyword, dan kata kunci lainnya harus ditetapkan ke variabel lainnya (harus berupa array).
-const [mainKeyword, ...otherKeyword] = books[0].keywords;
-console.log(mainKeyword);
-console.log(otherKeyword);
+//! Ada objek dalam array buku yang tidak memiliki properti onlineContent sama sekali. Ulangi array buku, dan catat string ke konsol dalam format ini: "${title}" tidak memberikan data tentang konten daringnya.
+for (let i = 0; i < books.length; i++) {
+  books[i].onlineContent ?? console.log(`"${books[i].title} provides no data about its online content"`);
+}
 
-//! Destrukturkan buku kedua dari array books menjadi variabel yang disebut bookPublisher. Variabel bookPublisher harus ditetapkan dengan nilai properti penerbit objek buku. Tetapkan properti lainnya ke variabel restOfTheBook.
-const { publisher: bookPublisher, ...restOfTheBook } = books[1];
-console.log(bookPublisher);
-
-//! Tulis fungsi bernama printBookAuthorsCount yang memiliki dua parameter bernama judul dan penulis. Parameter penulis harus menerima sejumlah argumen. Fungsi ini harus mencatat string yang diformat seperti itu ke konsol: "Buku "${title}" memiliki ${authors.length} penulis".
-books[books.length - 1].printBookAuthorsCount(
-  "Algorithms",
-  "Robert Sedgewick",
-  "Kevin Wayne"
-);
-
-//? -> CATATAN : object juga termasuk dalam urutan array 
-const fakeDb = [{a:1, ax:19},{b:2},{c:3}]
-console.log(fakeDb[0]);
-console.log(fakeDb[1].b);

@@ -248,23 +248,23 @@ const books = [
   },
 ];
 
-//! Destrukturkan properti kata kunci (array) buku pertama dari array buku menjadi variabel yang disebut mainKeyword dan sisanya. Kata kunci pertama harus ditetapkan ke mainKeyword, dan kata kunci lainnya harus ditetapkan ke variabel lainnya (harus berupa array).
-const [mainKeyword, ...otherKeyword] = books[0].keywords;
-console.log(mainKeyword);
-console.log(otherKeyword);
+//! Beberapa objek buku memiliki properti programmingLanguage, yang menentukan bahasa pemrograman apa yang digunakan dalam buku, misalnya
+/*
+{
+  title: 'Algorithms',
+  author: ['Robert Sedgewick', 'Kevin Wayne'],
+  ...
+  programmingLanguage: 'Java',     // <-- HERE
+}
+*/
+//! Tulis fungsi bernama hasExamplesInJava yang mengambil objek buku dari array buku sebagai argumen. Fungsi ini harus mengembalikan nilai true jika buku menggunakan Java, atau string 'tidak ada data tersedia' jika menggunakan bahasa lain atau tidak ada bahasa pemrograman sama sekali.
+function hasExamplesInJava (book) {
+  return book.programmingLanguage === 'Java' || 'no data available'
+}
+console.log(hasExamplesInJava(books[0]));
 
-//! Destrukturkan buku kedua dari array books menjadi variabel yang disebut bookPublisher. Variabel bookPublisher harus ditetapkan dengan nilai properti penerbit objek buku. Tetapkan properti lainnya ke variabel restOfTheBook.
-const { publisher: bookPublisher, ...restOfTheBook } = books[1];
-console.log(bookPublisher);
+//! Beberapa objek buku memiliki properti onlineContent, yang bernilai benar atau salah. Ulangi array buku, dan untuk buku yang menyediakan konten online, masukkan string dalam format ini ke konsol: "${title}" menyediakan konten online. Gunakan hubungan arus pendek.
 
-//! Tulis fungsi bernama printBookAuthorsCount yang memiliki dua parameter bernama judul dan penulis. Parameter penulis harus menerima sejumlah argumen. Fungsi ini harus mencatat string yang diformat seperti itu ke konsol: "Buku "${title}" memiliki ${authors.length} penulis".
-books[books.length - 1].printBookAuthorsCount(
-  "Algorithms",
-  "Robert Sedgewick",
-  "Kevin Wayne"
-);
-
-//? -> CATATAN : object juga termasuk dalam urutan array 
-const fakeDb = [{a:1, ax:19},{b:2},{c:3}]
-console.log(fakeDb[0]);
-console.log(fakeDb[1].b);
+for (let i = 0 ; i < books.length; i++){
+  books[i].onlineContent && console.log(`"${books[i].title}" provides online content`);
+}
