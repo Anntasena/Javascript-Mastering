@@ -1,100 +1,78 @@
-//! Coding Challenge #1
+"use strict"
 
-const game = {
-  team1: "Bayern Munich",
-  team2: "Borrussia Dortmund",
-  players: [
-    [
-      "Neuer",
-      "Pavard",
-      "Martinez",
-      "Alaba",
-      "Davies",
-      "Kimmich",
-      "Goretzka",
-      "Coman",
-      "Muller",
-      "Gnarby",
-      "Lewandowski",
-    ],
-    [
-      "Burki",
-      "Schulz",
-      "Hummels",
-      "Akanji",
-      "Hakimi",
-      "Weigl",
-      "Witsel",
-      "Hazard",
-      "Brandt",
-      "Sancho",
-      "Gotze",
-    ],
-  ],
-  score: "4:0",
-  scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
-  date: "Nov 9th, 2037",
-  odds: {
-    team1: 1.33,
-    x: 3.25,
-    team2: 6.5,
+
+//*------------------------------------------------------------------------------------------------------------------------------
+const restaurant = {
+  name: "Classico Italiano",
+  location: "Via Angelo Tavanti 23, Firenze, Italy",
+  categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
+  starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
+  mainMenu: ["Pizza", "Pasta", "Risotto"],
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = "20:00",
+    address = "Indonesia",
+  }) {
+    console.log(
+      `Order recived! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]}, time: ${time}, address: ${address}`
+    );
+  },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your delicious pasta ${ing1}, ${ing2}, ${ing3}`);
+  },
+  orderPizza: function (mainIng, ...otherIng) {
+    console.log(mainIng);
+    console.log(otherIng);
   },
 };
+//*------------------------------------------------------------------------------------------------------------------------------
 
-/*
-? Kami sedang membuat aplikasi taruhan sepak bola (soccer untuk teman-teman Amerika saya 😅)!
+//! Apa itu for..of?
+//? for...of adalah fitur JavaScript yang diperkenalkan di ES6 (ECMAScript 2015) yang memungkinkan Anda untuk mengiterasi (melakukan iterasi) melalui nilai-nilai dari objek yang iterable seperti array, string, map, set, dan objek iterable lainnya. Loop ini lebih bersih dan lebih mudah dibaca dibandingkan dengan loop for tradisional saat bekerja dengan elemen-elemen dari koleksi yang iterable.
+//* Cara kerja:
+// for (const element of iterable)
+// => "element" adalah variabel yang akan menyimpan setiap nilai dari iterable pada setiap iterasi.
+// => "iterable" adalah objek yang dapat diiterasi seperti array, string, map, set, atau objek yang memiliki implementasi untuk metode [Symbol.iterator]
 
-Misalkan kita mendapatkan data dari layanan web tentang permainan tertentu (di bawah). Dalam tantangan ini kita akan bekerja dengan data tersebut. Berikut tugas Anda:
+//$ TIPS: 
+//$-> for...of loop sangat merepotkan ketika kita membutuhkan indeks
+//$-> for...of loop hanya dimaksudkan untuk memberi kita saat ini
 
-*-> 1. Buat satu array pemain untuk setiap tim (variabel 'players1' dan 'players2')
-*-> 2. Pemain pertama dalam array pemain mana pun adalah penjaga gawang dan yang lainnya adalah pemain lapangan. Untuk Bayern Munich (tim 1) buat satu variabel ('gk') dengan nama penjaga gawang, dan satu array ('fieldPlayers') dengan semua 10 pemain lapangan yang tersisa
-*-> 3. Buat array 'allPlayers' yang berisi semua pemain dari kedua tim (22 pemain)
-*-> 4. Selama pertandingan, Bayern Munich (tim 1) menggunakan 3 pemain pengganti. Jadi buatlah array baru ('players1Final') yang berisi semua pemain team1 asli plus 'Thiago', 'Coutinho' dan 'Perisic'
-*-> 5. Berdasarkan objek game.odds, buat satu variabel untuk setiap odds (disebut 'team1', 'draw' dan 'team2')
-*-> 6. Tulis sebuah fungsi ('printGoals') yang menerima sejumlah nama pemain (BUKAN array) dan mencetak masing-masing ke konsol, beserta jumlah gol yang dicetak secara total (jumlah nama pemain yang dimasukkan)
-*-> 7. Tim dengan odds yang lebih rendah lebih mungkin menang. Cetak ke konsol tim mana yang lebih mungkin menang, TANPA menggunakan pernyataan if/else atau operator ternary.
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu]
 
-@ DATA UJI UNTUK 6: Gunakan pemain 'Davies', 'Muller', 'Lewandowski' dan 'Kimmich'. Kemudian, panggil fungsi tersebut lagi dengan pemain dari game.scored
+//# for..of 
+for (const item of menu) console.log(item);
 
-SEMOGA BERHASIL 😀
-*/
+//# for..of with index
+//@  OLD SCHOOL STYLE
+// for (const item of menu.entries()) {
+//   console.log(`${item[0] +1}: ${item[1]}`);
+  //+ ${item[0] +1} => urutan index
+  //+ ${item[1]} => nama product index
+// }
+//@ MODERN STYLE
+for (const [i , el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
 
-//* 1
-// const players1 = game.players[0];
-// const players2 = game.players[1];
-const [players1, players2] = game.players;
-console.log(players1);
-console.log(players2);
 
-//* 2
-const [gk, ...fieldPlayers] = players1;
-console.log(gk, fieldPlayers);
-
-//* 3
-const allPlayers = [...players1, ...players2];
-console.log(allPlayers);
-
-//* 4
-const players1Final = [...players1, "Thiago", "Continho", "Perisic"];
-console.log(players1Final);
-
-//* 5
-// const team1 = game.odds.team1;
-// const draw = game.odds.x;
-// const team2 = game.odds.team2;
-const {
-  odds: { team1, x: draw, team2 },
-} = game;
-console.log(team1, draw, team2);
-
-//* 6
-const printGoals = function (...players) {
-  // console.log(`player: ${scored}, score: ${game.score}`);
-  console.log(`${players.length} goals were scored`);
-};
-printGoals(...game.scored);
-printGoals( 'Davies', ' Muller', ' Lewandowski')
-
-//* 7
-team1 < team2 && console.log(`Team ${game.team1} is more likely to win`);
-team1 > team2 && console.log(`Team ${game.team2} is more likely to win`);
+console.log(menu.entries()); // array iterator
+console.log([...menu.entries()]); // melihat array didalam array iterator
