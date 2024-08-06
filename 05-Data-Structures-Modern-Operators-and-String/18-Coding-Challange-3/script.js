@@ -27,7 +27,8 @@ const gameEvents = new Map([
 ]);
 
 //# 1
-const events = new Set(gameEvents.values());
+// const events = new Set(gameEvents.values());
+const events = [...new Set(gameEvents.values())]; // convert to array
 console.log(events);
 
 //# 2
@@ -40,7 +41,7 @@ console.log(
 );
 
 const time = [...gameEvents.keys()].pop()
-console.log(time);
+console.log(time); 
 console.log(
   `An event happened, on average, every ${time / gameEvents.size} minutes`
 );
@@ -51,7 +52,7 @@ console.log(goals);
 
 for (const [min , event] of gameEvents) {
   const half = min <= 45 ? 'FIRST' : 'SECOND'
-  console.log(`${half}: ${min} ${event}`);
+  console.log(`[${half}] : ${min} ${event}`);
   
 }
 
