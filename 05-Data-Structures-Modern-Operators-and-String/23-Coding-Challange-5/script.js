@@ -8,32 +8,44 @@ const flights =
 //   🔴 Delayed Arrival from HEL to FAO (12h05)
 //            Departure from FAO to LIS (12h30)
 
-const depatureSchedule = flights.split("+");
-console.log(depatureSchedule);
+// const depatureSchedule = flights.split("+");
+// console.log(depatureSchedule);
 
-for (const schedule of depatureSchedule) {
-  const flightSchedule = schedule.replace("_", "").split(";");
-  // info keberangkatan
-  const text = flightSchedule[0].split("_");
-  const fixText = text.join().replace(",", " ");
+// for (const schedule of depatureSchedule) {
+//   const flightSchedule = schedule.replace("_", "").split(";");
+//   // info keberangkatan
+//   const text = flightSchedule[0].split("_");
+//   const fixText = text.join().replace(",", " ");
 
-  // tujuan keberangkatan
-  const fromDestination = flightSchedule[1].slice(0, 3).toUpperCase();
-  const toDestination = flightSchedule[2].slice(0, 3).toUpperCase();
-  // waktu keberangkatan
-  const timeSchedule = flightSchedule[3].replace(":", "h");
-  // logika apakah delay atau tidak
-  const message = `${fixText} from ${fromDestination} to ${toDestination} (${timeSchedule})`;
+//   // tujuan keberangkatan
+//   const fromDestination = flightSchedule[1].slice(0, 3).toUpperCase();
+//   const toDestination = flightSchedule[2].slice(0, 3).toUpperCase();
+//   // waktu keberangkatan
+//   const timeSchedule = flightSchedule[3].replace(":", "h");
 
-  // if (fixText.includes('Delayed')) {
-  //   console.log(🔴 ${fixText} from ${fromDestination} to ${toDestination} (${timeSchedule}).padStart(50, " "));
-  // } else {
-  //   console.log(${fixText} from ${fromDestination} to ${toDestination} (${timeSchedule}).padStart(50, " "));
-  // }
-  // simple ways: writing code
-  const renderMessage = (
-    fixText.includes("Delayed") ? `🔴 ${message}` : message
-  ).padStart(45, " ");
+//   // logika apakah delay atau tidak
+//   // if (fixText.includes('Delayed')) {
+//     //   console.log(🔴 ${fixText} from ${fromDestination} to ${toDestination} (${timeSchedule}).padStart(50, " "));
+//     // } else {
+//     //   console.log(${fixText} from ${fromDestination} to ${toDestination} (${timeSchedule}).padStart(50, " "));
+//   // }
 
-  console.log(renderMessage);
+//   // simple ways: writing code
+//   const message = `${fixText} from ${fromDestination} to ${toDestination} (${timeSchedule})`;
+//   const renderMessage = (
+//     fixText.includes("Delayed") ? `🔴 ${message}` : message
+//   ).padStart(45, " ");
+
+//   console.log(renderMessage);
+// }
+
+//*------------------------------------------------------------------------------------------------------------------------------------
+
+const getCode = value => value.slice(0,3).toUpperCase()
+
+for (const flight of flights.split("+")) {
+  const [type, from, to, time] = flight.split(";");
+  const output = `${type.startsWith('_Delayed') ? '🔴' : ''}${type.replaceAll('_', ' ')} from ${getCode(from)} to ${getCode(to)} (${time.replace(':', 'h')})`.padStart(45);
+  console.log(output);
+  
 }
