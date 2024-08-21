@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+//! display movements
 const displayMovements = function (movements) {
   //@ --> Menghapus konten yang ada di containerMovements
   containerMovements.innerHTML = "";
@@ -84,6 +85,27 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+//! computing username
+const createUsername = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+
+createUsername(accounts);
+
+//! display balance
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcDisplayBalance(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -97,3 +119,34 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+//! REDUCE METHOD
+
+console.log(movements);
+
+// with reducer
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  console.log(`perhitungan ke-${i + 1} =  ${cur} -> Saldo: ${acc + cur}`);
+  return acc + cur;
+}, 0);
+
+const balanceArr = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balanceArr);
+
+console.log(balance); // 3840
+
+// with forOf
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2); // 3840
+
+//? dari kedua cara tersebut kita memang mendapatkan nilai yang sama, tetapi menggunakan forLoop kita membutuhkan variable eksternal setiap kali ingin melakukan pengulangan dan tidak apa2 jika hanya membutuhkan satu pengulangan, tetapi menjadi sangat tidak praktis ketika menggunakan banyak loop untuk melakukan banyak operasi
+//? Method ini dan yang sebelumnya, menghindari variable tambahan dan langsung mengembalikan variable atau nilai yang sebenarnya
+
+// check Maxiimum value
+const max = movements.reduce((acc, cur) => {
+  if (acc > cur) {
+    return acc;
+  } else return cur;
+}, movements[0]);
+console.log(max); // 3000

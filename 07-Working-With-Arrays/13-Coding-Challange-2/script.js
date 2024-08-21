@@ -97,3 +97,33 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+// Coding Challenge #2
+
+/* 
+Mari kita kembali ke penelitian Julia dan Kate tentang anjing. Kali ini, mereka ingin mengubah usia anjing menjadi usia manusia dan menghitung usia rata-rata anjing dalam penelitian mereka.
+
+Buat fungsi 'calcAverageHumanAge', yang menerima array usia anjing ('ages'), dan melakukan hal-hal berikut secara berurutan:
+
+1. Hitung usia anjing dalam tahun manusia menggunakan rumus berikut: jika anjing berusia <= 2 tahun, humanAge = 2 * dogAge. Jika anjing berusia > 2 tahun, humanAge = 16 + dogAge * 4.
+2. Kecualikan semua anjing yang berusia kurang dari 18 tahun manusia (yang sama dengan memelihara anjing yang berusia minimal 18 tahun)
+3. Hitung rata-rata usia manusia dari semua anjing dewasa (Anda seharusnya sudah tahu dari tantangan lain bagaimana kami menghitung rata-rata 😉)
+4. Jalankan fungsi untuk kedua set data pengujian
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+
+*/
+
+const calcAverageHumanAge = function (ages) {
+  const humanAge = ages
+    .map((dogAge) => (dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4))
+    .filter((dogAge) => dogAge > 18, ages[0])
+    .reduce((acc, dogAge, i, arr) => acc + dogAge / arr.length, 0);
+  return humanAge;
+};
+
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));

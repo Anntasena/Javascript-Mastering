@@ -97,3 +97,50 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+
+//! Map method adalah cara lain yang dapat kita gunakan untuk mengulang array, tetapi tidak seperti masing2, map method akan memberi kita array baru dan array baru ini akan berisi disetiap posisi hasil penerapan function asli
+
+const euroToUsd = 1.1
+
+//# MAP
+const movementsUSD = movements.map(function (mov) {
+  return mov * euroToUsd
+})
+
+//$ [REMAINDER] map akan membuat array baru dan tidak akan merubah array asli
+console.log(movements); //  [200, 450, -400, 3000, -650, -130, 70, 1300]
+console.log(movementsUSD); // [220.00000000000003, 495.00000000000006, -440.00000000000006, 3300.0000000000005, -715.0000000000001, -143, 77, 1430.0000000000002]
+
+//# MAP WITH ARROW
+const arrMovementsUsd = movements.map(mov =>  mov * euroToUsd)
+console.log(arrMovementsUsd);
+
+//# FOR OF
+const movementsUSDFor = []
+for (const mov of movements) movementsUSDFor.push(mov * euroToUsd)
+
+console.log(movementsUSDFor); // [220.00000000000003, 495.00000000000006, -440.00000000000006, 3300.0000000000005, -715.0000000000001, -143, 77, 1430.0000000000002]
+
+//? PENJELASAN
+/*
+*-> Dari kedua cara tersebut perbedaannya adalah dengan melihatnya secara filosofi
+*-> Map menggunakan functional programing
+*-> Modern javascript menggunakan functional programing
+*/
+
+
+
+//? MAP MEHTOD
+const movementsDescriptions =  movements.map((mov, i , arr) => {
+  if (mov > 0) {
+    return `Movements ${i + 1}: You deposite ${mov}`;
+  } else {
+    return`Movements ${i + 1}: You withdraw ${Math.abs(mov)}`;
+  }
+});
+console.log(movementsDescriptions);
+
+// Shorthand with ternary
+const movementsDescriptionsTernary =  movements.map((mov, i) => `Movements ${i + 1}: You ${mov > 0 ? 'deposite' : 'withdraw'} ${Math.abs(mov)}`);
+console.log(movementsDescriptionsTernary);

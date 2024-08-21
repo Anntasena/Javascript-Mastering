@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+//! display movements
 const displayMovements = function (movements) {
   //@ --> Menghapus konten yang ada di containerMovements
   containerMovements.innerHTML = "";
@@ -84,6 +85,20 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+//! computing username
+const createUsername = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+    .toLowerCase()
+    .split(" ")
+    .map((name) => name[0])
+    .join("");
+  })
+};
+
+createUsername(accounts)
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -97,3 +112,27 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+//! FILTER METHOD
+//? Pada umumnya digunakan untuk menyaring element yang memenuhi kondisi tertentu
+
+const deposite = movements.filter(function (mov) {
+  return mov > 0 
+})
+
+const withdrawal = movements.filter(mov => mov < 0)
+
+console.log(movements);
+console.log(deposite);
+console.log(withdrawal);
+
+// for of
+const depositeFor = []
+for (const mov of movements) if (mov > 0) depositeFor.push(mov)
+  console.log(depositeFor);
+
+
+//$ [TIPS]
+//! menggunakan method filter, map dan reducer sama dengan menggunakan forLoop terus mengapa harus ada 2 cara?
+//? menggunakan method map filter dan reducer membuat filosofi coding menjadi functional programming
+//? kemudian membuat function bisa dichaining sepeti membuat function creatingUsername
