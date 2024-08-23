@@ -125,8 +125,7 @@ const caclDisplaySummary = function (movements) {
     .filter((mov) => mov > 0)
     .map((deposite) => (deposite * 1.2) / 100) // 1.2/100 = 1.2%
     .filter((int, i, arr) => {
-      console.log(arr);
-      return int >= 1
+      return int >= 1;
     })
     .reduce((acc, int) => acc + int);
   labelSumInterest.textContent = `${interest}€`;
@@ -147,38 +146,55 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
-const eurToUsd = 1.1;
 
-//# chaining method / biasanya dianalogikan dengan saluran pipa (pipeline)
-//! kekurangan cara ini adalah cukup sulit di debug jika salah satu hasilnya tidak seperti yang kita harapkan
-const totalDepositeUsd = movements
-  .filter((mov) => mov > 0) // membuat array baru
-  .map((mov) => mov * eurToUsd) // mengkonfersi euro to usd
-  .reduce((acc, mov, i, arr) => acc + mov, 0); // menggabungkan semua value array menjadi jumlah total
+//! FIND METHOD
+//? Seperti method lainnya, find method juga menerima kondisi dan seperti method find juga menerima callback function yang kemudian dipanggil sebagai method "loops over array"
 
-console.log(totalDepositeUsd);
+//? digunakan untuk menemukan elemen pertama dalam array yang memenuhi kondisi yang ditentukan oleh sebuah fungsi callback. Jika ada elemen yang memenuhi kondisi tersebut, .find() akan mengembalikan elemen tersebut. Jika tidak ada elemen yang cocok, maka undefined yang akan dikembalikan.
 
-//? cara debug pipeline
-const totalDepositeUsdDebug = movements
-  .filter((mov) => mov > 0)
-  .map((mov, i, arr) => {
-    //$ console.log(arr); // mengkakses arr salah satu cara yang bagus untuk melihat bug
-    return mov * eurToUsd;
-  })
-  .reduce((acc, mov, i, arr) => acc + mov, 0);
-
-console.log(totalDepositeUsdDebug);
-
-//$ [CATATAN PENTING] chaining method
+//! PERBEDAAN FILTER DAN FIND
 /*
-* 1. Tidak boleh terlalu sering menggunakan chaining, karna dapat menyebabkan masalah didunia nyata jika kita memiliki array yang sangat besar
-  ?- Jika memiliki chaining method yang besar, kita harus mencoba mengkompres semua function yang mereka lakukan menjadi method yang sesedikit mungkin
-  ?- Misalnya, terkadang kita kita membuat method "map" yang jauh lebih banyak dari pada yang sebenarnya kita butuhkan, dimana kita bisa melakukannya semuanya hanya dalam satu panggilan "map"
-  ?- Ketika kita menggunakan chain method seperti ini, teruslah mencari peluang untuk menjaga kinerja kode kita
-
-* 2. Dalam JS adalah bad practice untuk mengaitkan method yang mengubah array asli yang mendasarinya
-  ?-  Salah satunya adalah mehtod splice
-  ?-  Kita tidak boleh chaining method seperti "splice" atau "reverse" method
-  ?-  Tetapi kita dapat melakukannya, dan untuk aplikasi kecil seperti yang kita buat dan itu bukan masalah besar 
-  ?-  Untuk sekala besar, biasanya selalu merupakan cara yang baik untuk melakukan mutasi array
+? FILTER => 
+  *- mengembalikan semua element yang cocok dengan kondisi
+  *- mengembalikan array baru
+? FIND => 
+  *- mengembalikan HANYA pertama
+  *- Hanya mengembalikan element itu sendiri
 */
+
+//! TUJUAN FIND METHOD
+//? Menemukan tepat satu element dan biasanya membuat kondisis dimana hanya satu element yang memenuhi kondisi tersebut
+//? Salah satu fitur yang cocok menggunakan ini adalah fitur login, fitur searching, fitur validateing
+
+//$ [SYNTAX] array.find(callback(element, index, array), thisArg);
+
+const firstWithdrawel = movements.find((mov) => mov < 0);
+console.log(movements);
+console.log(firstWithdrawel); // -400
+
+// with for of
+const firstWithdrawelLoop = [];
+for (const loopWithdrawel of movements) {
+  if (loopWithdrawel < 0) {
+    firstWithdrawelLoop.push(loopWithdrawel);
+  }
+}
+console.log(firstWithdrawelLoop[0]);
+
+// next example
+
+// find
+const account = accounts.find((acc) => acc.owner === "Jessica Davis");
+console.log(account);
+
+// for of
+let loopAccount;
+
+for (const acc of accounts) {
+  if (acc.owner === "Jessica Davis") {
+    loopAccount = acc;
+    break; // memberhentikan loop saat account ditemukan
+  }
+}
+
+console.log(loopAccount);
