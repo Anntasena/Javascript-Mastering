@@ -260,49 +260,73 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-//! CARA MEMBUAT DAN MENGISI ARRAY SECARA TERPROGRAM
+//! MEMILIH DAN MENGGUNAKAN ARRAY METHOD DALAM WAKTU YANG TEPAT:
+/*
+? -> Salah satu cara terbaik untuk mengetahui, method mana yang digunakan, dalam setiap situasi adalah dengan mulai mengajukan pertanyaan, apa yang sebernarnya saya inginkan dari method ini
 
-//? Cara tradisional membuat array (manual)
-console.log([1, 2, 3, 4, 5, 6, 7]); // [1, 2, 3, 4, 5, 6, 7]
-console.log(new Array(1, 2, 3, 4, 5, 6, 7)); // [1, 2, 3, 4, 5, 6, 7]
+# [PERTANYAANNYA] Saya ingin..
+* -> mengubah array asli?
+* -> array baru?
+* -> array dengan index?
+* -> mengambil seluruh element array?
+* -> tau, apakah sebuah array menyertakan element?
+* -> mendapatkan string baru?
+* -> mengubah array menjadi nilai?
+* -> sekedar mengulang / looping array?
+* -> dan sekenario yang berbeda lainnya...
 
-// Empty array + fill method
-const x = new Array(7);
-console.log(x); // [empty × 7]
-console.log(x.map(() => 5)); // [empty × 7]
 
-//? cara modern mengisi array (otomatis)
-//# ".fill()" -> igunakan untuk mengisi semua elemen dalam array dengan nilai statis, dari indeks awal hingga indeks akhir yang ditentukan. Method ini mengubah array asli, bukan membuat array baru.
-//$ [SYNTAX] => arr.fill(value, start, end)
+# [METHOD YANG DIGUNAKAN]
+* -> mengubah array asli?
+@-> add to original:
+- .push (end)
+- .unshift (start)
+@-> remove from original:
+- .pop (end)
+- .shift (start)
+- .splice (any)
+@-> others:
+- .reverse
+- .sort
+- .fill
 
-x.fill(1);
-console.log(x); // [1, 1, 1, 1, 1, 1, 1]
+* -> array baru?
+@-> computed from original:
+- .map (loop)
+@-> filtered using condition:
+- .filter
+@-> portion of original:
+- .slice
+@-> adding original to other:
+- .concat
+@-> flattering the original:
+- .flat
+- .flatMap
 
-const arr = [1, 2, 3, 4, 5, 6, 7];
-arr.fill(50, 4, 6);
-console.log(arr); // [1, 2, 3, 4, 50, 50, 7]
+* -> array dengan index?
+@-> based on value:
+- .indexOf
+@-> based on test condition:
+- .findIndex
 
-//# ".from()" -> method statis yang digunakan untuk membuat array baru dari objek yang mirip dengan array atau iterable, seperti string, set, map, atau objek dengan properti length. Ini berguna ketika Anda ingin mengonversi objek semacam itu menjadi array yang sebenarnya.
-//$ [SYNTAX] => Array.from(arrayLike, mapFn, thisArg)
+* -> mengambil seluruh element array?
+@-> based on test condition:
 
-const arrFrom = Array.from({ length: 7 }, () => 1);
-console.log(arrFrom); // [1, 1, 1, 1, 1, 1, 1]
+* -> tau, apakah sebuah array menyertakan element?
+@-> based value:
+- .includes
+@-> based test condition:
+- .some
 
-const arrSortForm = Array.from({ length: 7 }, (_, i) => i + 1);
-console.log(arrSortForm);
+* -> mendapatkan string baru?
+@-> based on separator stirng:
+- .join
 
-// REAL WORLD EXAMPLE: count movement form UI
-labelBalance.addEventListener("click", function () {
-  // Best practice
-  const movementsUI = Array.from(
-    document.querySelectorAll(".movements__value"),
-    (el) => Number(el.textContent.replace("€", "")) // callback
-  );
-  console.log(movementsUI);
+* -> mengubah array menjadi nilai?
+@-> based on accumulator:
+- .reduce (membuat array menjadi satu nilai dari berberapa tipe data)
 
-  // Alternatif practice
-  const movementsUIAlt = [
-    ...document.querySelectorAll(".movements__value"),
-  ].map((el) => el.textContent.replace("€", ""));
-  console.log(movementsUIAlt);
-});
+* -> sekedar mengulang / looping array?
+@-> based on callback:
+- .forEach (tidak membaut array baru, hanya looping)
+*/

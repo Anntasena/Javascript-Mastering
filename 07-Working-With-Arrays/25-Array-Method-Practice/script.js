@@ -260,49 +260,94 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-//! CARA MEMBUAT DAN MENGISI ARRAY SECARA TERPROGRAM
+//! PLUS PLUS BUG (++)
+let a = 10;
+console.log(a++); // 10
+console.log(a); // 11
 
-//? Cara tradisional membuat array (manual)
-console.log([1, 2, 3, 4, 5, 6, 7]); // [1, 2, 3, 4, 5, 6, 7]
-console.log(new Array(1, 2, 3, 4, 5, 6, 7)); // [1, 2, 3, 4, 5, 6, 7]
+let b = 20;
+console.log(++b); // 21
 
-// Empty array + fill method
-const x = new Array(7);
-console.log(x); // [empty × 7]
-console.log(x.map(() => 5)); // [empty × 7]
+/*
+? [PENJELASAN]
+# : a++ (Post-Increment):
+    *- Langkah pertama: a++ mengembalikan nilai awal dari a, kemudian menambah nilai a sebesar 1.
+    *- Langkah kedua: Setelah nilai a dikembalikan (diprint), barulah a di-increment (ditambah 1).
 
-//? cara modern mengisi array (otomatis)
-//# ".fill()" -> igunakan untuk mengisi semua elemen dalam array dengan nilai statis, dari indeks awal hingga indeks akhir yang ditentukan. Method ini mengubah array asli, bukan membuat array baru.
-//$ [SYNTAX] => arr.fill(value, start, end)
+# : ++b (Pre-Increment):
+    *- Langkah pertama: ++b menambah nilai b sebesar 1 terlebih dahulu.
+    *- Langkah kedua: Setelah nilai b di-increment, barulah nilai yang sudah di-increment tersebut dikembalikan (diprint).
 
-x.fill(1);
-console.log(x); // [1, 1, 1, 1, 1, 1, 1]
+? [KESIMPULAN]
+*- Post-Increment (a++): Mengembalikan nilai lama, lalu melakukan increment.
+*- Pre-Increment (++b): Melakukan increment terlebih dahulu, lalu mengembalikan nilai baru.
+*/
 
-const arr = [1, 2, 3, 4, 5, 6, 7];
-arr.fill(50, 4, 6);
-console.log(arr); // [1, 2, 3, 4, 50, 50, 7]
+//$------------------------------------------------------$\\
 
-//# ".from()" -> method statis yang digunakan untuk membuat array baru dari objek yang mirip dengan array atau iterable, seperti string, set, map, atau objek dengan properti length. Ini berguna ketika Anda ingin mengonversi objek semacam itu menjadi array yang sebenarnya.
-//$ [SYNTAX] => Array.from(arrayLike, mapFn, thisArg)
+//! ARRAY METHOD PRACTICE
 
-const arrFrom = Array.from({ length: 7 }, () => 1);
-console.log(arrFrom); // [1, 1, 1, 1, 1, 1, 1]
+//@ 1. menggabungkan semua movements di semua akun
+const bankDepositSum = accounts
+  .map((acc) => acc.movements) // mengambil nilai movement dari accaouts
+  .flat() // mengubahnya menjadi satu array
+  .filter((mov) => mov > 0) // memfilter array nilai yang di 'negatif' tidak ikut
+  .reduce((sum, mov) => sum + mov, 0); // menggabungkan semua array menjadi 1 nilai
+console.log(bankDepositSum);
 
-const arrSortForm = Array.from({ length: 7 }, (_, i) => i + 1);
-console.log(arrSortForm);
+//@ 2. menghitung berapa banyak deposit yang ada dibank dengan sedikitnya $1.000
+// way #1
+const numDeposits1000Way1 = accounts
+  .flatMap((acc) => acc.movements)
+  .filter((mov) => mov >= 1000).length;
+console.log(numDeposits1000Way1);
+// way #2
+const numDeposits1000Way2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+console.log(numDeposits1000Way2);
 
-// REAL WORLD EXAMPLE: count movement form UI
-labelBalance.addEventListener("click", function () {
-  // Best practice
-  const movementsUI = Array.from(
-    document.querySelectorAll(".movements__value"),
-    (el) => Number(el.textContent.replace("€", "")) // callback
+//@ 3. membuat object baru yang berisi jumlah setoran dan jumlah penarikan
+const sums = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sum, cur) => {
+      cur > 0 ? (sum.deposits += cur) : (sum.withdrawels += cur);
+      return sum;
+    },
+    { deposits: 0, withdrawels: 0 }
   );
-  console.log(movementsUI);
+console.log(sums);
 
-  // Alternatif practice
-  const movementsUIAlt = [
-    ...document.querySelectorAll(".movements__value"),
-  ].map((el) => el.textContent.replace("€", ""));
-  console.log(movementsUIAlt);
-});
+// destructuring
+const { deposits, withdrawels } = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sum, cur) => {
+      // cur > 0 ? (sum.deposits += cur) : (sum.withdrawels += cur);
+      sum[cur > 0 ? "deposits" : "withdrawels"] += cur;
+      return sum;
+    },
+    { deposits: 0, withdrawels: 0 }
+  );
+console.log(deposits, withdrawels);
+
+//@ 4. mengkonversi string apapun menjadi title case
+// this is a nice title => This Is a Nice Title
+const convertTitleCase = function (title) {
+  const capliatize = (str) => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ["a", "an", "the", "but", "or", "on", "in", "with", "and"];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(" ")
+    .map((word) => (exceptions.includes(word) ? word : capliatize(word)))
+    .join(" ");
+
+  return capliatize(titleCase);
+};
+
+console.log(convertTitleCase("this is a nice title"));
+console.log(convertTitleCase("this is a LONG title but not too long"));
+console.log(convertTitleCase("and is another title with an EXAMPLE"));

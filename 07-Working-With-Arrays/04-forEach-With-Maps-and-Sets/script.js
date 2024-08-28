@@ -77,7 +77,6 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //! FOREACH WITH MAPS AND SETS
 
-
 //# MAPS
 const currencies = new Map([
   ["USD", "United States dollar"],
@@ -87,14 +86,13 @@ const currencies = new Map([
 
 currencies.forEach(function (value, key, map) {
   console.log(`${key}: ${value}`);
-})
-
+});
 
 //# SETS
-const currenciesUnique = new Set(['USD', 'GPD', 'USD', 'EUR', 'EUR'])
+const currenciesUnique = new Set(["USD", "GPD", "USD", "EUR", "EUR"]);
 console.log(currenciesUnique);
 
 //? parameter underscore "_" adalah parameter yang sekali pakai atau yang tidak perlu sama sakali
 currenciesUnique.forEach(function (value, _, map) {
   console.log(`${value}: ${value}`);
-})
+});
