@@ -134,10 +134,66 @@ const dogs = [
 
 //*-> 1
 dogs.forEach(function (dog) {
-  dog.recommendedFood = dog.weight ** 0.75 * 28;
+  dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
 });
 
 console.log(dogs);
 
 //*-> 2
+// mencari anjing sarah
 const sarahDog = dogs.find((dog) => dog.owners.includes("Sarah"));
+// memeriksa dan mencetak status anjing sarah
+const { curFood, recommendedFood } = sarahDog;
+curFood > recommendedFood
+  ? console.log("Sarah dog eat more than recomended")
+  : console.log("Sarah's dog eats less than recommended");
+
+//! alternatif & best practice
+//$ console.log(`Anjing Sarah makan terlalu ${dogSarah.curFood > dogSarah.recommendedFood ? 'banyak' : 'sedikit'}.`);
+
+//*-> 3
+const ownersEatTooMuch = [];
+const ownersEatTooLittle = [];
+// membuat copy dari data anjing
+dogs.map((dog) =>
+  dog.curFood > dog.recommendedFood
+    ? ownersEatTooMuch.push(...dog.owners)
+    : ownersEatTooLittle.push(...dog.owners)
+);
+
+//$ [ALTERNATIF WAY]
+const ownersEatTooMuch2 = dogs
+  .filter((dog) => dog.curFood > dog.recommendedFood)
+  .flatMap((dog) => dog.owners);
+console.log(`ALT WAYS: ${ownersEatTooMuch2.join(" ")}`);
+
+const ownersEatTooLittle2 = dogs
+  .filter((dog) => dog.curFood < dog.recommendedFood)
+  .flatMap((dog) => dog.owners);
+console.log(`ALT WAYS: ${ownersEatTooLittle2.join(" ")}`);
+
+//*-> 4
+console.log(`Dog ${ownersEatTooMuch.join(", ")} eat to much`);
+console.log(`Dog ${ownersEatTooLittle.join(", ")} eat to little`);
+
+//*-> 5
+const dogFoodCorrect = dogs.some((dog) => dog.curFood === dog.recommendedFood);
+console.log(`ada yang makan dengan jumlah tepat? ${dogFoodCorrect}`);
+
+//*-> 6
+// function check makan dengan benar
+const goodEatDogs = (dogs) =>
+  dogs.curFood > dogs.recommendedFood * 0.9 &&
+  dogs.curFood < dogs.recommendedFood * 1.1;
+console.log(
+  `ada yang makan dengan jumlah yang benar? ${dogs.some(goodEatDogs)}`
+);
+
+//*-> 7
+console.log(dogs.filter(goodEatDogs));
+
+//*-> 8
+const dogsSorted = dogs
+  .slice() // membuat shallow copy
+  .sort((a, b) => a.recommendedFood - b.recommendedFood); // menyortir dari rekomendasi makan terkecil ke terbesar
+console.log(dogsSorted);
