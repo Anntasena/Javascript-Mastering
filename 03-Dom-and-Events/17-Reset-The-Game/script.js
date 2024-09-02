@@ -13,7 +13,7 @@ const btnRoll = document.querySelector(`.btn--roll`);
 const btnHold = document.querySelector(`.btn--hold`);
 
 //# variable
-let scores, currentScore, activePlayer, playing
+let scores, currentScore, activePlayer, playing;
 
 //# function inisialisasi
 const init = function () {
@@ -32,7 +32,7 @@ const init = function () {
   player0El.classList.add(`player--active`);
   player1El.classList.remove(`player--active`);
 };
-init()
+init();
 
 //# function ganti pemain
 const switchPlayer = function () {
@@ -75,7 +75,7 @@ btnHold.addEventListener(`click`, function () {
     diceEl.classList.remove(`hidden`);
 
     // 2. mengecek skor sudah mencapai 100 poin atau belum
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= 20) {
       // jika mencapai 100 point game selesai
       playing = false;
       diceEl.classList.add(`hidden`);

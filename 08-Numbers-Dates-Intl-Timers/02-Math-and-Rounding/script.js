@@ -94,7 +94,7 @@ const displayMovements = function (movements, sort = false) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -104,19 +104,19 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter((mov) => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter((mov) => mov > 0)
@@ -126,7 +126,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -206,7 +206,7 @@ btnTransfer.addEventListener("click", function (e) {
 btnLoan.addEventListener("click", function (e) {
   e.preventDefault();
 
-  const amount = +inputLoanAmount.value;
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (
     amount > 0 &&
@@ -255,67 +255,70 @@ btnSort.addEventListener("click", function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-/*
-$ [FACT & TIPS]  
-?-> Hal yang harus kita ketahui tentang angka di JS adalah semua angka disajikan secara internal sebagai angka floating point.
-?-> Jadi pada dasarnya, selalu sebagai desimal tidak peduli apakah kita benar2 menulisnya sebagai bilangan bulat atau desimal
-?-> Angka direpresentasikan secara internal dalam  64 base 2 format, jadi itu berari angka selalu disimpan dalam format biner, yang artinya mereka terdiri dari 0 dan 1
-?-> Dalam bentuk biner, sangat sulit untuk mempresentasikan berberapa pecahan yang sangat mudah direpresentasikan dalam sistem base 10 yang biasa kita gunakan
-#-> base 10 = 0 - 9 (terdiri dari angka 0 hingga 9)
-#-> binary base 2 = 0 dan 1 (terdiri dari 0 dan 1)
-?-> Ada angka2 tertentu yang sangat sulit untuk diwakili di base 2, salah satu contohnya adalah pecahan 0.1
-!-> JADI KETAHUILAH bahwa kita tidak melakukan seperti perhitungan ilmiah atau keuangan yang benar2 tepat dalam JS, karna pada akhirnya kita akan mengalami masalah seperti ini
-*/
+//! MATH AND ROUNDING
 
-// Example
-console.log(23 === 23.0); // true
+//# akar kuadrat
+console.log(Math.sqrt(25)); // akar kuadrat dari 25 = 5
+console.log(25 ** (1 / 2)); // 5, alasanya karna tanda kurung membuat perhitungan prioritas "25 ** 0.5" adalah cara lain menghitung prioritas
 
-// ini adalah contoh binary base 2
-console.log(0.1 + 0.2 === 0.3); // false
+console.log(25 ** 1 / 2); // hasilnya 12.5, alasannya 25 pangkat 1 dibagi 2
 
-//# trik mengubah stirng ke number
-console.log(Number("25")); // 25
-//@ (menambah operator "+" didepan membuat JS melakukan pemeriksaan typing, jadi secara otomatis membuat opertan menjadi angka)
-console.log(+"25"); // 25
-console.log(+"hello"); // NaN
+//# akar kubik
+console.log(8 ** (1 / 3)); // 2
 
-//# parsing (mengurai angka dari sebuah string)
-//* "parseInt" ->
-console.log(Number.parseInt("30px")); // 30
-// Syarat untuk membuat ini berfungsi, string harus dimulai dengan angka
-console.log(Number.parseInt("px30")); // NaN
-//@ Cara seperti ini bisa sangat berguna dalam situasi dimana kita mendapatkan semacam unit dari CSS dan kemudian perlu menyingkirkan unit itu
+//# nilai maksimal
+console.log(Math.max(4, 10, 2, 6, 34)); // 34
+console.log(Math.max(4, 10, 2, 6, "34")); // 34, ini terjadi Math.max melakukan pemaksaan menjadi tipe data number
+console.log(Math.max(4, 10, 2, 6, 34, "20Text")); // NaN
 
-//# function parseInt sebenarnya menerima argumen kedua, yang disebut "regex"
-//? Regex adalah base dari sistem angka yang kita gunakan, jadi disini kita hanya menggunakan angka base10
-console.log(Number.parseInt("30px", 10)); // 30 (base10)
-console.log(Number.parseInt("30px", 2)); // NaN (base binary 2)
+//# nilai minimum
+console.log(Math.min(4, 10, 2, 6, 34)); // 2
+console.log(Math.min(4, 10, "2", 6, 34)); // 2
 
-//$ "parseFloat" ->
-console.log(Number.parseFloat("2.5rem")); // 2.5
-console.log(Number.parseFloat("   2.5rem   ")); // 2.5 (menambahkannya space tidak akan merubahnya)
-console.log(Number.parseInt("2.5rem")); // 2 (menjadi 2 karna interger / bilangan bulat)
+//# luas radius lingkaran
+console.log(Math.PI * Number.parseFloat("10px") ** 2);
 
-//# menggunakan parsing
-//* TRADISIONAL
-console.log(parseFloat("2.5rem"));
-//* MODERN
-console.log(Number.parseFloat("2.5rem"));
+//# angka acak
+console.log(Math.random()); // angka acak dari 0 ke 1
+console.log(Math.random() * 6); // angka acak dari 0 ke 6
+console.log(Math.trunc(Math.random() * 6) + 1); // angka acak dari 0 ke 6 dan membuatnya menjadi bilangan bulat
 
-//$ "isNaN" ->
-console.log(Number.isNaN(20)); // false
-console.log(Number.isNaN("20")); // false
-console.log(Number.isNaN(+"20px")); // true
+//! example
+// angka acak diantara angka terbesar dan terkecil
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1) + min;
 
-//$ "isFinite" -> angka terbatas (dan memeriksa apakah value adalah tipe data number)
-console.log(Number.isFinite(20)); // true
-console.log(Number.isFinite("20")); // false
-console.log(Number.isFinite(+"20")); // true
-console.log(Number.isFinite(+"20px")); // false
-console.log(Number.isFinite(20 / 0)); // false (ini karna 20 / 0 adalah infinity / takterhingga)
+console.log(randomInt(10, 20));
 
-//$ "isInteger" ->
-console.log(Number.isInteger(23)); // true
-console.log(Number.isInteger(23.0)); // true
-console.log(Number.isInteger(23.1)); // false
-console.log(Number.isInteger(23 / 0)); // false
+//# pembulatan angka (semua method dibawah melakukan pemaksaan tipedata)
+//@ membulatkan angka (.trunc)
+console.log(Math.trunc(23.5)); // 23
+
+//@ membulatkan angka kebilangan bulat terdekat (.round)
+console.log(Math.round(23.9)); // 24
+console.log(Math.round(23.4)); // 23
+
+//@ membulatkan angka keatas (.ceil)
+console.log(Math.ceil(23.9)); // 24
+console.log(Math.ceil(23.4)); // 24
+
+//@ membulatkan angka kebawah (.floor)
+console.log(Math.floor(23.9)); // 23
+console.log(Math.floor(23.4)); // 23
+
+//@ jika dilihat2 method "trunc" dan "floor" terlihat sama tetapi jika menggunakan nilai negatif akan berbeda
+//@ trunc VS floor
+console.log(Math.trunc(-25.5)); // 25
+console.log(Math.floor(-25.5)); // 26
+
+//# nilai desimal
+
+//@ "toFixed()" -> selalu mengembailkan nilai string bukan number
+//@ "toFixed()" -> argumentnya diisi seberapa banyak digit yang ada
+console.log((2.7).toFixed(0)); // 3
+console.log((2.7).toFixed(2)); // 2.70
+console.log((2.12345).toFixed(3)); // 2.123
+
+//@ convert ke number
+console.log(+(2.12345).toFixed(3)); // 2.123
+console.log(Number((2.12345).toFixed(3))); // 2.123
