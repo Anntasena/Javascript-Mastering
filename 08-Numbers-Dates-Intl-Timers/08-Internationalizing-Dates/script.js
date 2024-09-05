@@ -319,6 +319,7 @@ btnSort.addEventListener("click", function (e) {
 // LECTURES
 
 //! INTERNATIONALIZING DATES
+//? Searcing di google dengan kata kunci "Intl"
 
 /*
 //$ Experimenting API
