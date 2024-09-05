@@ -21,9 +21,9 @@ const account1 = {
     "2020-01-28T09:15:04.904Z",
     "2020-04-01T10:17:24.185Z",
     "2020-05-08T14:11:59.604Z",
-    "2020-05-27T17:01:17.194Z",
-    "2020-07-11T23:36:17.929Z",
-    "2020-07-12T10:51:36.790Z",
+    "2024-09-01T17:01:17.194Z",
+    "2024-09-03T23:36:17.929Z",
+    "2024-09-05T10:51:36.790Z",
   ],
   currency: "EUR",
   locale: "pt-PT", // de-DE
@@ -41,9 +41,9 @@ const account2 = {
     "2019-12-25T06:04:23.907Z",
     "2020-01-25T14:18:46.235Z",
     "2020-02-05T16:33:06.386Z",
-    "2020-04-10T14:43:26.374Z",
-    "2020-06-25T18:49:59.371Z",
-    "2020-07-26T12:01:20.894Z",
+    "2020-07-05T14:43:26.374Z",
+    "2020-08-04T18:49:59.371Z",
+    "2020-08-05T12:01:20.894Z",
   ],
   currency: "USD",
   locale: "en-US",
@@ -81,19 +81,45 @@ const inputClosePin = document.querySelector(".form__input--pin");
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+const formatMovementDate = function (date, locale) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+  console.log(daysPassed);
+
+  // Logic date movements
+  if (daysPassed === 0) return "Today";
+  if (daysPassed === 1) return "Yesterday";
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  // Get the correct date, month, and year
+  // const day = `${date.getDate()}`.padStart(2, "0");
+  // const month = `${date.getMonth() + 1}`.padStart(2, "0"); // getMonth is 0-based, so we add 1
+  // const year = `${date.getFullYear()}`;
+  // return `${day}/${month}/${year}`;
+  return new Intl.DateTimeFormat(locale).format(date);
+};
+
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = "";
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
+
+    const date = new Date(acc.movementsDates[i]);
+    const displayDate = formatMovementDate(date, acc.locale);
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
+    <div class="movements__date">${displayDate}</div>
         <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
@@ -142,7 +168,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -154,6 +180,11 @@ const updateUI = function (acc) {
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+
+// FAKE ALWAYS LOGGED IN
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
 
 btnLogin.addEventListener("click", function (e) {
   // Prevent form from submitting
@@ -170,6 +201,31 @@ btnLogin.addEventListener("click", function (e) {
       currentAccount.owner.split(" ")[0]
     }`;
     containerApp.style.opacity = 100;
+
+    // Create current date
+    const now = new Date();
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      // weekday: "long",
+    };
+    //# dari jam di dekstop pengguna
+    const locale = navigator.language;
+    // console.log(locale);
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
+    // const day = `${now.getDay()}`.padStart(2, "0"); // membuatnya menjadi ada angka "0" di depan saat membuat jam
+    // const month = `${now.getMonth() + 1}`.padStart(2, "0");
+    // const year = now.getFullYear();
+    // const hour = `${now.getHours()}`.padStart(2, "0");
+    // const minute = `${now.getMinutes()}`.padStart(2, "0");
+    // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minute}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = "";
@@ -198,6 +254,10 @@ btnTransfer.addEventListener("click", function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date().toDateString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -214,6 +274,9 @@ btnLoan.addEventListener("click", function (e) {
   ) {
     // Add movement
     currentAccount.movements.push(amount);
+
+    // Add loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
 
     // Update UI
     updateUI(currentAccount);
@@ -247,7 +310,7 @@ btnClose.addEventListener("click", function (e) {
 let sorted = false;
 btnSort.addEventListener("click", function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
@@ -255,75 +318,30 @@ btnSort.addEventListener("click", function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-//! CREATING DATES
-//? Saat kita membangun aplikasi sesungguhnya, satu jenis data yang sering muncul sepanjang waktu adalah tanggal dan waktu
-
-//# membuat tanggal ada 4 cara di JS
-
-//@ cara 1: new Date()
-const now = new Date();
-console.log(now); // waktu saat ini
-
-//@ cara 2:
-console.log(new Date("Sep 03 2024 14:07:53"));
-console.log(new Date("December 24, 2015")); // Thu Dec 24 2015 00:00:00 GMT+0700 (Western Indonesia Time)
-console.log(new Date("December, 24 2015")); // Thu Dec 24 2015 00:00:00 GMT+0700 (Western Indonesia Time)
-console.log(new Date(account1.movementsDates[0]));
-console.log(new Date(2077, 10, 19, 15, 23, 5));
-// tahun(2077), bulan(10), tanggal(19), jam(15), menit(23), detik(5)
-// bulan di js terhitung dari 0
+//! INTERNATIONALIZING DATES
 
 /*
-2019-11-18T21:31:17.178Z
-apa yang dimaksud dengan format diatas?
+//$ Experimenting API
+// ada berberapa cara menambilnya
+// 1. numeric = bentuk angka
+// 2. long = bentuk penjelasan
+// 3. 2-digit = ada 2 digit
+? untuk mengetahui lebih detail tanya ke ChatGPT
 
-"Z" dibelakang berartu UTC yang berarti waktu universal yang terkordinasi atau waktu tanpa zona waktu 
+//# dari jam global
+const now = new Date();
+const options = {
+  hour: "numeric",
+  minute: "numeric",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  weekday: "long",
+};
+
+labelDate.textContent = new Intl.DateTimeFormat("en-US", options).format(now);
+
+//# dari jam di dekstop pengguna
+const locale = navigator.language;
+console.log(local);
 */
-
-//$ milidetik waktu unix pertama adalah 01 januari 1970
-console.log(new Date(0)); // Thu Jan 01 1970 07:00:00 GMT+0700 (Western Indonesia Time)
-console.log(new Date(3 * 24 * 60 * 60 * 1000));
-
-// hanya pemisah di console
-console.log(" ");
-console.log(" ");
-
-//# working with dates
-const future = new Date(2077, 10, 19, 15, 23);
-console.log(future);
-
-//@ getFullYear() -> mendapatkan tahun
-console.log(future.getFullYear()); // 2077
-
-//@ getMonth() -> mendapatkan bulan
-console.log(future.getMonth()); // 10 = november
-
-//@ getDate() -> mendapatkan tanggal
-console.log(future.getDate()); // 19
-
-//@ getDay() -> mendapatkan hari keberapa dari seminggu
-console.log(future.getDay()); // 5
-
-//@ getHours() -> mendapatkan jam
-console.log(future.getHours()); // 15
-
-//@ getMinutes() -> mendapatkan menit
-console.log(future.getMinutes()); // 23
-
-//@ getSeconds() -> mendapatkan detik
-console.log(future.getSeconds()); // 0
-
-//@ toISOString() -> mengubah format menjadi ISO string
-console.log(future.toISOString()); // 2077-11-19T08:23:00.000Z
-
-//@ getTime() -> mendapatkan waktu yang terhitung dari UNIX time "1 january 1970" dan diubah menjadi milidetik
-console.log(future.getTime()); // 3404535780000
-console.log(new Date(3404535780000)); // Fri Nov 19 2077 15:23:00 GMT+0700 (Western Indonesia Time) sama sepeti var future
-
-//# time stamp
-//@ Date.now()
-console.log(Date.now()); // formatnya seperti getTime tetapi saat itu juga
-
-//# set time
-future.setFullYear(2099);
-console.log(future); // Thu Nov 19 2099 15:23:00 GMT+0700 (Western Indonesia Time)
