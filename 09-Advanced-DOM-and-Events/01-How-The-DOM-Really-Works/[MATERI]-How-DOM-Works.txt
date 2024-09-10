@@ -1,0 +1,26 @@
+APA ITU DOM?
+
+DOM adalah interface antara semua kode JS dan browser, atau lebih khusus dokumen HTML yang dirender di browser dan oleh browser
+
+DOM dapat digunakan:
+    1. Untuk membuat JS dapat berinteraksi
+    2. Kita dapat menulis JS untuk membuat, memodifikasi, menghapus element HTML, mengatur style, class dan attribute, mendengan dan menanggapi event
+    3. DOM tree dihasilkan dari dokumen HTML
+    4. DOM adalah API yang sangat kompleks, dalam praktiknya DOM berisi banyak sekali methode dan method yang kita gunakan untuk berinteraksi dengan DOM tree
+
+BAGAIMANA DOM API DIATUR DIBELAKANG LAYAR?
+
+1. Jadi setiap DOM bertipe, node.js
+2. Setiap node diwakili dalam JS oleh sebuah object
+3. Object ini mendapatkan akses method dan property, seperti:
+    - .textContent
+    - .childNodes
+    - .parentNodes
+    - .cloneNodes()
+    - dan lain lain
+
+4. Node type memiliki berberapa child type, seperti:
+    - Element
+    - Text
+    - Comment
+    - Document
