@@ -86,3 +86,40 @@ $ Dengan pendekatan OOP, kode menjadi lebih modular, mudah dipahami, dan mudah d
 # ES6 Classes
 # Object.create()
 */
+
+//--------------------------------------------------------------------------------------------------------------------------
+/*
+$ TIPS
+-> OOP variable harus diawali dengan huruf kapital
+-> Function declaration dan expresion bisa berfungsi di OOP "KECUALI" arrow function
+-> DI OOP saat kita memanggilnya function kita harus menambahkan new di depannya (ini disebut constructur function)
+*/
+
+/*
+# 4 step behinde the scane
+    1.  New {} is created
+    2.  Functin is called, this = {}
+    3.  {} linked to prototype
+    4.  Function automaticly return {}
+*/
+
+//$ FACT -> constructur function bukanlah fitur Javascript, mereka hanyalah sebuah pola yang telah dikembangkan oleh pengembang lain
+
+const Person = function (firstName, birthYear) {
+  // instance property
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+  // Instance method (bad practice)
+  this.calcAge = function () {
+    console.log(2024 - this.birthYear);
+  };
+};
+
+const syahrin = new Person("Syahrin", 1998);
+console.log(syahrin);
+
+const matlail = new Person("Matlail", 1999);
+const fajri = new Person("Fajri", 2000);
+console.log(matlail, fajri);
+
+console.log(syahrin instanceof Person); // true

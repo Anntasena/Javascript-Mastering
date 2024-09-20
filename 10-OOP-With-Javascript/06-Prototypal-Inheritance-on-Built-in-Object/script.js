@@ -86,3 +86,95 @@ $ Dengan pendekatan OOP, kode menjadi lebih modular, mudah dipahami, dan mudah d
 # ES6 Classes
 # Object.create()
 */
+
+//--------------------------------------------------------------------------------------------------------------------------
+/*
+$ TIPS
+-> OOP variable harus diawali dengan huruf kapital
+-> Function declaration dan expresion bisa berfungsi di OOP "KECUALI" arrow function
+-> DI OOP saat kita memanggilnya function kita harus menambahkan new di depannya (ini disebut constructur function)
+*/
+
+/*
+# 4 step behinde the scane
+    1.  New {} is created
+    2.  Functin is called, this = {}
+    3.  {} linked to prototype
+    4.  Function automaticly return {}
+*/
+
+//$ FACT -> constructur function bukanlah fitur Javascript, mereka hanyalah sebuah pola yang telah dikembangkan oleh pengembang lain
+
+const Person = function (firstName, birthYear) {
+  //@ instance property
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+  //@ Instance method (bad practice)
+  //   this.calcAge = function () {
+  //     console.log(2024 - this.birthYear);
+  //   };
+};
+
+const syahrin = new Person("Syahrin", 1998);
+console.log(syahrin);
+
+const matlail = new Person("Matlail", 1999);
+const fajri = new Person("Fajri", 2000);
+console.log(matlail, fajri);
+
+console.log(syahrin instanceof Person); // true
+
+/*
+! PROTOTYPES
+? Setiap function dalam JS secara otomatis memiliki property yang disebut prototype dan itu termasuk function constructor
+*/
+console.log(Person.prototype);
+
+Person.prototype.calcAge = function () {
+  console.log(2024 - this.birthYear);
+};
+
+syahrin.calcAge();
+matlail.calcAge();
+
+// check prototype
+console.log(syahrin.__proto__);
+
+console.log(syahrin.__proto__ === Person.prototype); // true
+console.log(Person.prototype.isPrototypeOf(syahrin)); // true
+
+Person.prototype.species = "Homo Sapiens";
+console.log(syahrin, matlail);
+console.log(syahrin.species, matlail.species);
+
+console.log(syahrin.hasOwnProperty("firstName")); // true
+console.log(syahrin.hasOwnProperty("species")); // false
+
+console.log(syahrin.__proto__); // Object.prototype (top of prototype chain)
+console.log(syahrin.__proto__.__proto__);
+console.log(syahrin.__proto__.__proto__.__proto__);
+
+console.log(Person.prototype.constructor);
+console.dir(Person.prototype.constructor);
+
+const arr = [2, 4, 5, 6, 7, 8, 9, 10, 9, 9, 9]; // new Array === []
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype); // true
+
+console.log(arr.__proto__.__proto__);
+
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+/*
+$ TIPS -> Memperluas / memperbanyak prototype bukanlah ide yang baik
+    * 1. Ada kemungkinan JS bisa manambahkan prototype dengan nama yang sama di update selanjutnya
+    * 2. Jika ada dua prototype dengan nama yang sama akan merusak kode kita
+    * 3. Jika kita bekerja dengan tim ada kemungkinan member tim menerapkan method yang sama dengan nama yang berbeda yang akhirnya menyebabkan banyak bug
+*/
+
+const h1 = document.querySelector("h1");
+console.dir((x) => x + 1);
