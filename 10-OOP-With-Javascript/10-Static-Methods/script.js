@@ -89,19 +89,38 @@ $ Dengan pendekatan OOP, kode menjadi lebih modular, mudah dipahami, dan mudah d
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-// class expression
-const PersonClassExp = class {};
+const account = {
+  owner: "syahrin",
+  movements: [200, 400, 5000, 10, 200],
 
-// class declaration -> gunakan ini agar lebih mudah
-class PersonClassDec {}
+  // getter
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
 
-// contoh penggunaan
+  // setter -> harus memiliki setidaknya 1 parameter
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+  // getter / setter tidak harus ditulis berbarengan!
+};
+
+// menggunakan getter
+console.log(account.latest);
+
+// menggunakan setter
+// account.latest(50); // salah, karna ini untuk method
+account.latest = 50; // benar
+console.log(account.movements);
+
+//# GETTER AND SETTER DI CLASS
 class PersonClass {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
+  //@ instance method
   // Method will be added to .prototype property
   clacAge() {
     console.log(2024 - this.birthYear);
@@ -110,33 +129,47 @@ class PersonClass {
   greetCl() {
     console.log(`Hey ${this.firstName} (Method in class)`);
   }
+
+  // getter in class
+  get age() {
+    return 2024 - this.birthYear;
+  }
+
+  // setter in class
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(" ")) this._fullName = name;
+    // menambahkan _ "underscore membuat code tidak error"
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName; // mengembalikan nama variable yang sembelumnya memakai underscore "_"
+  }
+
+  //@ static method
+  static hey() {
+    console.log(this);
+    console.log(`Hey there this is static method in class 😎`);
+  }
 }
 
-const syahrin = new PersonClass("Syahrin", 1998);
-console.log(syahrin);
-syahrin.clacAge(); // 26
+const syahrin = new PersonClass("Syahrin Matlail", 1998);
+console.log(syahrin.age);
+console.log(syahrin.fullName);
 
-console.log(syahrin.__proto__ === PersonClass.prototype); // true
+PersonClass.hey();
 
-// crate method in prototype
-PersonClass.prototype.greet = function () {
-  console.log(`Hey ${this.firstName}`);
+//# STATIC METHOD
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 };
 
-syahrin.greet(); // Hey Syahrin
-syahrin.greetCl(); // Hey Syahrin
+Person.hey = function () {
+  console.log("Hey there 🫡");
+  console.log(this);
+};
 
-//$ FACT
-// 1. Class tidak di hoisted
-// 2. Seperti function class juga termasuk "first class citizen"
-// 3. Body class selalu diesekusi dengan strict mode
-
-/*
-! Apakah harus mengunakan constructur functionn / class seperti ini?
-? Menggunaakn construcor function akan 100 persen baik2 saja, jika ingin menggunakan class harus memahami prototype dan pewarisannya
-
-$ TIPS
-1. Jika ingin menjadi ahli dalam JS, jangan lewatkan satupun
-2. Jika ingin merasa nyaman saat menulis kode pada dasarnya berarti memahami dengan tepat apa yang dilakukan kode yang ditulis
-3. Memahami kode juga membuat percaya diri
-*/
+Person.hey();

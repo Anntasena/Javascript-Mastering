@@ -89,54 +89,42 @@ $ Dengan pendekatan OOP, kode menjadi lebih modular, mudah dipahami, dan mudah d
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-// class expression
-const PersonClassExp = class {};
-
-// class declaration -> gunakan ini agar lebih mudah
-class PersonClassDec {}
-
-// contoh penggunaan
-class PersonClass {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-  }
-
-  // Method will be added to .prototype property
-  clacAge() {
-    console.log(2024 - this.birthYear);
-  }
-
-  greetCl() {
-    console.log(`Hey ${this.firstName} (Method in class)`);
-  }
-}
-
-const syahrin = new PersonClass("Syahrin", 1998);
-console.log(syahrin);
-syahrin.clacAge(); // 26
-
-console.log(syahrin.__proto__ === PersonClass.prototype); // true
-
-// crate method in prototype
-PersonClass.prototype.greet = function () {
-  console.log(`Hey ${this.firstName}`);
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 };
 
-syahrin.greet(); // Hey Syahrin
-syahrin.greetCl(); // Hey Syahrin
+Person.prototype.calcAge = function () {
+  console.log(2024 - this.birthYear);
+};
 
-//$ FACT
-// 1. Class tidak di hoisted
-// 2. Seperti function class juga termasuk "first class citizen"
-// 3. Body class selalu diesekusi dengan strict mode
+// biasanaya pewarisan menggunakan argument yg sama dan argumen tambahan
+const Student = function (firstName, birthYear, course) {
+  // this.firstName = firstName;
+  // this.birthYear = birthYear;
+  Person.call(this, firstName, birthYear); // gunakan ini untuk code yg lebih efisien
+  this.course = course;
+};
 
-/*
-! Apakah harus mengunakan constructur functionn / class seperti ini?
-? Menggunaakn construcor function akan 100 persen baik2 saja, jika ingin menggunakan class harus memahami prototype dan pewarisannya
+// connection / linking prototype
+Student.prototype = Object.create(Person.prototype);
+// Student.prototype = Person.prototype; // ini tidak bekerja, gunakan yang atas
 
-$ TIPS
-1. Jika ingin menjadi ahli dalam JS, jangan lewatkan satupun
-2. Jika ingin merasa nyaman saat menulis kode pada dasarnya berarti memahami dengan tepat apa yang dilakukan kode yang ditulis
-3. Memahami kode juga membuat percaya diri
-*/
+Student.prototype.introduce = function () {
+  console.log(`My name ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student("Mike", 2020, "Computer Sciece");
+
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student); // true
+console.log(mike instanceof Person); // true
+console.log(mike instanceof Object); // true
+
+Student.prototype.constructor = Student;
+console.dir(Student.__proto__.constructor);
