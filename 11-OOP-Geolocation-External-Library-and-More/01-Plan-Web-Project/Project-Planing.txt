@@ -1,0 +1,43 @@
+Project Planing
+
+-> Saat membangun sebuah project selalu dimulai dengan perencanaan, karna jika tidak akan menghadapi banyak kebingungan di kemudian hari
+
+---------------------------
+Konsep Project Planing
+---------------------------
+
+1. User story 
+- Deskripsi dari kegunaan aplikasi dari sudut pandang user
+- Saat meanalisis user story kita bisa gunakan format: Sebagai [type of user], saya ingin [as action], hingga bisa mendapatkan [benefit]   
+    > type of user = who
+    > as action = What
+    > benefit = why
+
++ Contoh:
+Aplikasi pencatat olahraga
+- Sebagai User, saya ingin catat jadwal lari dengan indkator lokasi, jarak, waktu dan langkah per menit
+- Sebagai User, saya ingin catat latihan bersepedah dengan indikator lokasi, jarak, waktu, kecepatan dan peningkatan ketinggian
+- Sebagai User, saya ingin mencatat kemajuan dari waktu ke waktu
+- Sebagai User, saya ingin tetap bisa melihat jadwal olahraga ketika saya meninggalkan aplikasi
+
+2. Features
+Fitur yang diperlukan
+- Map yang bisa diklik dan menambahkan jadwal latihan
+- Menggunakan Geolocation untuk menampilkan Map di lokasi penggunaan saat ini
+- Form untuk memasukan data (jarak, waktu dan lain-lain) -> Jogging 
+- Form untuk memasukan data -> Cycling
+- Menampilkan jadwal latihan dalam sebuah list
+- Menampilkan jadwal latihan dalam peta
+- Menyimpan data latihan kedalam browser menggunakan locale storage API
+- Ketika user kembali ke page, halaman akan membaca data dari yang tersimpan di penyimpanan dan kemudian menampilkannya di map dan juga di list
+
+3. Flowchart -> What we build
+Setiap kali kita memulai flowchart ada baiknya untuk memulai dengan "PAGE LOAD"
+
+(((ADA DI IMAGE)))
+ 
+4. Architecture -> How we build
+Seperti flowchart kita tidak selalu membutuhkan architecture akhir yang sempurna sebelum implementasi
+
+
+5. Planing step
