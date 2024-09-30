@@ -1,0 +1,12 @@
+// Additional Feature IDEAS: 
+
+1. Ability to edit workout
+2. Ability to delete workout
+3. Ability to delete All workout
+4. Ability to sort workout by certain fields (e.g distance / duration)
+5. Re-build Running and Cycling object comming from local storage
+6. More realistic error and comfiration messages
+7. Ability to position the map show all workouts [very hard] -> ((read documentation))
+8. Ability to draw lines and shapes instead of just a points [very hard]
+9. Geocode location from coordinates ("Run in faro, Portugal") [after learn asyncrhonous JS section]
+10. Display weather data for workout time and place [after learn asyncrhonous JS section]
