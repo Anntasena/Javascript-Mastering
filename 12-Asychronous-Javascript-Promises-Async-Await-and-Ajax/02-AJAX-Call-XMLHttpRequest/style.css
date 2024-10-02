@@ -46,7 +46,7 @@ body {
 }
 
 .neighbour::before {
-  content: 'Neighbour country';
+  content: "Neighbour country";
   width: 100%;
   position: absolute;
   top: -4rem;
@@ -70,6 +70,7 @@ body {
   background-color: #eee;
   border-top-left-radius: 0.7rem;
   border-top-right-radius: 0.7rem;
+  box-shadow: 0 3.5rem 15rem 0rem rgba(0, 0, 0, 0.1);
 }
 
 .country__data {
