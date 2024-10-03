@@ -73,6 +73,16 @@ const getCountryAndNeighbour = function (country) {
 // getCountryAndNeighbour("indonesia");
 getCountryAndNeighbour("usa");
 
+//! CONTOH CALLBACK HELL SAMA SEPERTI DIATAS
+/*
+Efek buruk callback hell
+1. susah dimaintain
+2. susah dipahami
+3. menyebabkan banyak bug
+3. terlihat berantakan
+
+$[TIPS] Kode yang sulit dipahami pada dasarnya adalah kode yang buruk, karna akan memiliki lebih banyak bug, karna semakin sulit untuk memahami kode dan alasan dibuatnya kode, semakin sulit untuk menambah fitur baru dan menambahkan lebih banyak fungsionalitas ke aplikasi
+*/
 setTimeout(() => {
   console.log(`1 sec passed`);
   setTimeout(() => {
