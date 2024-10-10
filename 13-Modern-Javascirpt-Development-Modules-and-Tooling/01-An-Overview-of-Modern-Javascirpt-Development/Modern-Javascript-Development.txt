@@ -1,0 +1,34 @@
+MODERN JAVASCRIPT DEVELOPMENT
+////////////////////////////////////
+////////////////////////////////////
+
+saat membangun project membagi file menjadi berberapa modul jauh lebih baik dari pada menulisnya hanya dalam 1 file, dan berberap modul dapat berbagi data diantara mereka dan membuat kode lebih terorganisir dan mudah dimaintain
+
+[       MODULE       ]
+[       MODULE       ]
+[      3RD PARTY     ]
+
+3RD PARTY PACKAGE = termasuk open-source package seperti (React, jQuery, leaflet, dan lain2)
+
+semua package ini tersedia di "npm" -> npm = node package manager
+
+dalam pengembangan project harus melalui proses pembuatan (build proses) dimana satu "bundle" javascript final yang besar dibuat, dan itulah final file yang akan di deploy ke web-server untuk produksi
+
+
+DEVELOPMENT PROCESS
+////////////////////////////////////
+////////////////////////////////////
+
+[DEVELOPMENT] -> [BUILDING PROCESS] -> [PRODUCTION]
+
+--- DEVELOPMENT
+Dalam Development terdiri dari berberapa modul dan 3rd party package
+
+--- BUILDING PROCESS
+Dalam building process terdiri dari "bundling" dan "transpiling / polyfilling"
+
+"bundling" => adalah proses menyatukan semua module menjadi satu file
+"transpiling / polyfilling" => adalah proses mengubah code menjadi code dengan format ES6 lama yang bisa berjalan di browser jadul
+
+Dalam bundling kita bisa menggunakan pihak ke3 seperti "webpack / parcel"
+Dalam transpiling / polyfilling kita bisa menggunakan pihak ke3 seperti "babel"

@@ -1,0 +1,71 @@
+// AN OVERVIEW OF MODULES
+
+-> Pada dasarnya Module merupakan code yang bisa digunakan kembali yang merangkum detail implementasi dasi bagian tertentu dari proyek kita, terdengar seperti function atau class tetapi perbedaanya adalah bahwa module 
+-> Merupakan "file mandiri", tetapi tidak selalu demikian, tetapi biasanya ketika kita memikirkan sebuah modul, kita memikirkan file yang terpisah. Jadi tentu saja modul selalu berisi bereberapa kode tetapi juga dapat memiliki "import" dan "export"
+
+-> EXPORT = seperti namanya kita dapat mengeskport nilai dari sebuah module misalnya, value yang sederhana atau bahkan seluruh function dan apapun yang kita export dari module disebut public API. Jadi ini seperti class dimana kita juga bisa mengexport public API untuk digunakan kode lain
+
+-> Di dalam module, public API ini sebenarnya dikonsumsi dengan mengimport value ke dalam module jadi seperti halnya kita kita dapat mengexport nilai dalam modul, biasanya kita juga dapat mengimport value dari modul lain
+
+-> Module lain yang kita import ini kemudian disebut "Dependency" of importing module karena kode ada dimodul tidak dapat bekerja tanpa kode, yang diimport dari module external
+
+-> Seluruh logika diatas berlaku untuk semua module dalam semua programing language
+
+-> Module adalah pola yang telah digunakan pengembang dalam semua bahasa selama berberapa dekade
+
+-> Kita dapat menulis kode tanpa modul jika aplikasinya sederhana, namun ketika basis kode tumbuh lebih besar dan lebih besar akan semakin sulit 
+
+-> Keuntungan menggunakan modul dan yang pertama adalah ===> modul membuatnya sangat mudah untuk membuat software
+
+-> Sebagai perumpamaan module seperti blok bangunan yang kita kumpulkan untuk membangun aplikasi yang sangat kompleks
+
+-> Modul juga mengarah ke basis kode yang lebih terorganisir
+
+-> Modul memungkinkan kita untuk dengan mudah menggunakannya kembali kode yang sama dalam sebuah proyek dan bahkan berberapa proyek
+
+
+----------------------------------------
+MANFAAT MODULE
+1. Compose software
+2. Isolate component
+3. Abstact code
+4. Organized code
+5. Reuse code
+----------------------------------------
+
+
+// NATIVE JAVASCRIPT (ES6) MODULE
+/////////////////////////////////
+
+-> Javascript memiliki sistem module bawaan
+
+-> [ES6 Module] model yang sebenarnya disimpan dalam file dan setiap file adalah satu modul, jadi ada tempat 1 module per-file
+
+-----------------------------------------------------------------------
+TOP-LEVEL-VARIABLE
+[ES6 MODULE] -> Scope to module || [SCRIPT] -> global
+
+DEFAULT MODE
+[ES6 MODULE] -> Stric mode  || [SCRIPT] -> "Sloppy" mode
+
+TOP-LEVEL THIS
+[ES6 MODULE] -> undefined  || [SCRIPT] -> window
+
+IMPORT AND EXPORT
+[ES6 MODULE] -> ✅YES || [SCRIPT] -> ⛔NO
+
+HTML LINKING
+[ES6 MODULE] -> <script type="module">  || [SCRIPT] ->  <script>
+
+FILE DOWNLOADING
+[ES6 MODULE] -> Asynchronous || [SCRIPT] -> Syncronous
+[ES6 MODULE] ->  || [SCRIPT] -> 
+-----------------------------------------------------------------------
+
+
+// HOW ES6 MODULES ARE IMPORTED
+//////////////////////////////////
+
+-> Jika sepotong kode diesekusi, langkah pertama adalah (parse) mengurai kode itu
+-> Parsing pada dasarnya hanya membaca kode tanpa menjalankannya
+-> Seluruh proses pengimportan module terjadi sebelum kode di module utama benar2 diesekusi
