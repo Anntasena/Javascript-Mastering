@@ -1,0 +1,9 @@
+Project planing
+-----------------------
+
+1. User stories
+    - Deskripsi dari fungsi aplikasi dari perspektif user
+2. Features
+3. Flowchart
+4. Architecture
+5. Development Step
