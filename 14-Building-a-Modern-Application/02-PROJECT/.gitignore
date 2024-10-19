@@ -13,3 +13,6 @@ yarn-error.log
 # Dist and Build folders
 dist/
 build/
+
+# Ignore Project-Planing folder
+Project-Planing/
