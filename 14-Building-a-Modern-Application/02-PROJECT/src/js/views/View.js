@@ -18,6 +18,36 @@ export default class View {
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
+  //= Update function (not best algorithm in real world with big application)
+  update(data) {
+    this._data = data;
+    const newMarkup = this._generateMarkup();
+
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newElements = Array.from(newDOM.querySelectorAll("*"));
+    const curElements = Array.from(this._parentElement.querySelectorAll("*"));
+
+    // check DOM element
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i];
+
+      // update changes text
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ""
+      ) {
+        console.log("💥", newEl.firstChild.nodeValue.trim());
+        curEl.textContent = newEl.textContent;
+      }
+
+      // update changes attributes
+      if (!newEl.isEqualNode(curEl)) console.log(Array.from(newEl.attributes));
+      Array.from(newEl.attributes).forEach((attr) =>
+        curEl.setAttribute(attr.name, attr.value)
+      );
+    });
+  }
+
   //= Clear content function
   _clear() {
     // console.log(this._parentElement);
