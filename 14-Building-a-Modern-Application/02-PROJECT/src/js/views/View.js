@@ -7,13 +7,16 @@ export default class View {
   _data;
 
   //= Render function
-  render(data) {
+  render(data, render = true) {
     // Checking and validaating input serchbar
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
     this._data = data;
     const markup = this._generateMarkup();
+
+    if (!render) return markup;
+
     this._clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
@@ -34,6 +37,7 @@ export default class View {
       // update changes text
       if (
         !newEl.isEqualNode(curEl) &&
+        newEl.firstChild &&
         newEl.firstChild?.nodeValue.trim() !== ""
       ) {
         console.log("💥", newEl.firstChild.nodeValue.trim());
@@ -41,10 +45,10 @@ export default class View {
       }
 
       // update changes attributes
-      if (!newEl.isEqualNode(curEl)) console.log(Array.from(newEl.attributes));
-      Array.from(newEl.attributes).forEach((attr) =>
-        curEl.setAttribute(attr.name, attr.value)
-      );
+      if (!newEl.isEqualNode(curEl))
+        Array.from(newEl.attributes).forEach((attr) =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
     });
   }
 
